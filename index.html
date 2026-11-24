@@ -1782,7 +1782,7 @@ const clues = [
         options: [
             "It's not slow, it's 'slow cooking' 😌",
             "Staring at the induction until it gets scared and heats up",
-            "Waiting for someone else to light the gas",
+            "Waiting for someone else to light the oven.",
             "The food is ready, it's just waiting for everyone else to be ready"
         ],
 
@@ -1808,21 +1808,27 @@ const clues = [
     },
 
     {
-        title: "MYSTERY",
+    title: "MYSTERY",
 
-        question:
-            "Somewhere in space, a piano and a guitar got stuck in the same room. The guitar guy also wants to sing. What should the piano do?",
+    question:
+        "A piano and a guitar on different planets want to host a concert. But there's a tiny problem: their signals never sync! Will the concert happen?",
 
-        options: [
-            "Play louder and pretend nothing is happening",
-            "Quietly fix the wrong notes",
-            "Play an old English song and see if he knows it",
-            "Sing along badly, because why not"
-        ],
+    options: [
+        "No! 🌌 The distance is too great. Their signals always arrive late.",
+        "Yes! 🚀 Music doesn't obey the laws of physics. It's faster than light!",
+        "Nooo! 😔 The piano has decided that a solo career is much easier.",
+        "Of course! ✨ Their synchronisation will be so perfect that even the universe won't be able to find a logic behind it."
+    ],
 
-        response:
-            "The stars heard it all. They liked it more than they will admit."
-    },
+    responses: {
+        no:
+            "Oh no! The universe is sad to hear that. But don't worry, the stars will still enjoy the music in their own way. 🎵🌌",
+
+        yes:
+            "Let's go! Some musical connections are apparently too powerful for the laws of physics. Let the rehearsals begin! 🎶✨"
+    }
+}
+,
 
     {
         title: "MYSTERY",
@@ -1951,15 +1957,38 @@ function checkAnswer() {
 
     submitAnswer.disabled = true;
 
-    // Display the heartfelt response.
-    feedback.textContent =
-        clues[currentClue].response;
+    const clue = clues[currentClue];
+
+    let response;
+
+    // Handle questions with multiple possible responses.
+    if (clue.responses) {
+
+        // COSMIC CONCERT:
+        // Option 1 and 3 = No
+        // Option 2 and 4 = Yes
+        if (selectedAnswer === 0 || selectedAnswer === 2) {
+            response = clue.responses.no;
+        } else {
+            response = clue.responses.yes;
+        }
+
+    } else {
+
+        // All other questions use their normal response.
+        response = clue.response;
+
+    }
+
+    // Display the selected response.
+    feedback.textContent = response;
 
     feedback.classList.add("visible");
 
-        // Give her enough time to read: scales with the length of the message.
-    const words = clues[currentClue].response.split(/\s+/).length;
-    const readingTime = Math.max(2600, 2000 + words * 160);
+    // Calculate reading time based on the actual response.
+    const words = response.split(/\s+/).length;
+
+    const readingTime = Math.max(2600, 2000 + words * 140);
 
     setTimeout(() => {
 
@@ -1967,10 +1996,7 @@ function checkAnswer() {
 
     }, readingTime);
 
-
 }
-
-
 submitAnswer.addEventListener("click", checkAnswer);
 
 
