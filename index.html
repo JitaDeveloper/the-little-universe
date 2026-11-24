@@ -1732,12 +1732,9 @@ startButton.addEventListener("click", async () => {
     openingScreen.style.transition = "opacity 1s ease";
     openingScreen.style.opacity = "0";
 
-    footer.style.opacity = "0";
-
     await wait(1100);
 
     openingScreen.style.display = "none";
-    footer.style.display = "none";
 
     showPage(missionPage);
 
