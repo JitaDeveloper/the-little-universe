@@ -1183,6 +1183,104 @@ body {
     }
 }
 
+   /* =========================================
+   FINAL MESSAGE: start from the top + stronger blur
+========================================= */
+
+/* Anchor to the top instead of the bottom */
+#personalMessage {
+    top: max(24px, env(safe-area-inset-top));
+    bottom: auto;
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+}
+
+#personalMessage.visible {
+    pointer-events: auto; /* lets her scroll if the text is taller than the screen */
+}
+
+/* Fade out the heading so it doesn't clash with the message */
+.collection-header {
+    transition: opacity 1.2s ease;
+}
+
+#collectionPage.message-mode .collection-header {
+    opacity: 0;
+}
+
+/* More blur and a slightly darker veil behind the message */
+#messageBackdrop {
+    background: rgba(8, 11, 32, 0.45);
+}
+
+#collectionPage.message-mode #messageBackdrop {
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+}
+
+/* Spacing between paragraphs (your global reset removed it) */
+#personalMessage p {
+    margin-bottom: 12px;
+}
+
+#personalMessage h2 {
+    font-size: clamp(30px, 8vw, 40px);
+    margin: 14px 0 8px;
+}
+
+#personalMessage .small-star {
+    margin-bottom: 10px;
+}
+
+/* Phones */
+@media (max-width: 600px) {
+
+    #personalMessage {
+        font-size: 15.5px;
+        line-height: 1.55;
+    }
+
+    #personalMessage p {
+        margin-bottom: 10px;
+    }
+
+    /* Overrides the inline font-size on the last line */
+    #personalMessage p[style] {
+        font-size: 15.5px !important;
+    }
+}
+
+/* Very short phones */
+@media (max-height: 650px) {
+
+    #personalMessage {
+        top: 14px;
+        font-size: 14.5px;
+        line-height: 1.45;
+    }
+
+    #personalMessage p[style] {
+        font-size: 14.5px !important;
+    }
+}
+   /* =========================================
+   FINAL MESSAGE: vertically centered
+========================================= */
+
+#personalMessage {
+    top: 48%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    max-height: 88dvh;
+}
+
+/* Very short phones: keep it centered too (overrides the earlier top: 14px) */
+@media (max-height: 650px) {
+    #personalMessage {
+        top: 50%;
+    }
+}
+
 </style>
 </head>
 
@@ -1368,7 +1466,7 @@ body {
 
             <h2>Look what you found.</h2>
 
-            <p>CLICK THE LATEST GLOWING STAR TO CONTINUE</p>
+            <p id="collectionHint">CLICK THE LATEST GLOWING STAR TO CONTINUE</p>
 
         </div>
 
@@ -2016,7 +2114,18 @@ function revealNewStar() {
         }
 
     });
+    // Last star: continue automatically, no tap needed.
+    if (currentClue === clues.length - 1) {
 
+        // Hide the "click the star" hint, since no click is needed now.
+        const hint = document.getElementById("collectionHint");
+        if (hint) hint.style.opacity = "0";
+
+        // Let the star finish gliding into place, then continue on its own.
+        setTimeout(() => {
+            star.click();
+        }, 1800);
+    }
 }
 
 
