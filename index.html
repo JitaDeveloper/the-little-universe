@@ -1,0 +1,2083 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b20">
+
+<title>The Little Universe</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================
+   ORIGINAL WEBSITE DESIGN
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080b20;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.universe {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    background:
+        radial-gradient(ellipse at 50% 100%,
+            rgba(73,43,116,.36), transparent 55%),
+        radial-gradient(ellipse at 15% 20%,
+            rgba(48,62,124,.23), transparent 45%),
+        linear-gradient(145deg,#080b20,#11132d 55%,#090b20);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* STARFIELD */
+
+#starfield {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* NEBULA */
+
+.nebula {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .13;
+    pointer-events: none;
+    animation: nebulaFloat 12s ease-in-out infinite alternate;
+}
+
+.nebula.one {
+    background: #7552ce;
+    top: -180px;
+    left: -150px;
+}
+
+.nebula.two {
+    background: #365cba;
+    bottom: -200px;
+    right: -120px;
+    animation-delay: -5s;
+}
+
+@keyframes nebulaFloat {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(45px,35px) scale(1.2); }
+}
+
+/* MOON */
+
+.moon {
+    position: absolute;
+    top: 11%;
+    right: 13%;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #f5e6c5;
+    box-shadow:
+        0 0 25px rgba(245,230,197,.35),
+        0 0 75px rgba(245,230,197,.12);
+    animation: moonGlow 4s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+.moon::after {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 18px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #10132e;
+}
+
+@keyframes moonGlow {
+    from { box-shadow: 0 0 20px rgba(245,230,197,.2); }
+    to { box-shadow: 0 0 45px rgba(245,230,197,.5); }
+}
+
+/* SHOOTING STAR */
+
+.shooting-star {
+    position: absolute;
+    top: 20%;
+    left: -150px;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg,transparent,#fff,transparent);
+    transform: rotate(-35deg);
+    opacity: 0;
+    animation: shooting 9s linear infinite;
+    animation-delay: 3s;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes shooting {
+    0% {
+        left: -150px;
+        top: 20%;
+        opacity: 0;
+    }
+    5% { opacity: 1; }
+    15% {
+        left: 110%;
+        top: 65%;
+        opacity: 0;
+    }
+    100% { opacity: 0; }
+}
+
+/* =========================================
+   COMMON TYPOGRAPHY
+========================================= */
+
+.eyebrow {
+    color: #c7b4ed;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.small-star {
+    color: #e8cf96;
+    font-size: 20px;
+    display: inline-block;
+    margin-bottom: 16px;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%,100% { opacity: .45; transform: scale(.9); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+h1 {
+    font-family: 'Cormorant Garamond',serif;
+    font-size: clamp(48px,9vw,85px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 1px;
+    color: #f4e8ce;
+    text-shadow: 0 0 35px rgba(218,190,255,.15);
+}
+
+h2 {
+    font-family: 'Cormorant Garamond',serif;
+    font-size: clamp(36px,7vw,55px);
+    font-weight: 400;
+    color: #f4e8ce;
+}
+
+.subtitle {
+    margin-top: 22px;
+    color: #b8b8d1;
+    font-family: 'Cormorant Garamond',serif;
+    font-size: clamp(18px,3vw,24px);
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.divider {
+    width: 55px;
+    height: 1px;
+    background: linear-gradient(90deg,transparent,#d8bb83,transparent);
+    margin: 35px auto;
+}
+
+.message {
+    max-width: 480px;
+    margin: 0 auto;
+    color: #c5c5d7;
+    font-size: 14px;
+    line-height: 2;
+    font-weight: 300;
+}
+
+.highlight {
+    color: #f0d5a0;
+    font-weight: 400;
+}
+
+.description {
+    color: #b8b8d1;
+    font-size: 14px;
+    line-height: 1.9;
+    font-weight: 300;
+}
+
+/* =========================================
+   ORIGINAL BUTTON
+========================================= */
+
+.mission-button,
+.action-button {
+    margin-top: 35px;
+    padding: 16px 35px;
+    border: 1px solid rgba(231,205,155,.65);
+    background: rgba(231,205,155,.07);
+    color: #f3dfb9;
+    font-family: 'DM Sans',sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .4s ease;
+    position: relative;
+}
+
+.mission-button:hover,
+.action-button:hover {
+    background: rgba(231,205,155,.17);
+    box-shadow: 0 0 35px rgba(231,205,155,.18);
+    transform: translateY(-3px);
+}
+
+.mission-button:disabled,
+.action-button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.button-arrow {
+    display: inline-block;
+    margin-left: 12px;
+    transition: transform .3s;
+}
+
+.mission-button:hover .button-arrow {
+    transform: translateX(5px);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #777b9b;
+    font-size: 10px;
+    letter-spacing: 3px;
+    z-index: 2;
+    transition: opacity 1s ease;
+}
+
+/* =========================================
+   AUTOMATIC INTRODUCTION
+========================================= */
+
+.content {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    padding: 30px 15px;
+    animation: entrance 2s ease forwards;
+}
+
+@keyframes entrance {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message-line {
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* BUTTON APPEARS LAST */
+
+#startButton {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#startButton.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* =========================================
+   SCREEN MANAGEMENT
+========================================= */
+
+.page {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.page.active {
+    display: flex;
+    opacity: 1;
+}
+
+.page-content {
+    width: 100%;
+    max-width: 650px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}
+
+/* =========================================
+   PAGE 2: MISSION CONTROL
+========================================= */
+
+.mission-heading {
+    font-family: 'Cormorant Garamond',serif;
+    font-size: clamp(36px,7vw,55px);
+    font-weight: 400;
+    color: #f4e8ce;
+    margin-bottom: 15px;
+}
+
+.empty-stars {
+    display: flex;
+    justify-content: center;
+    gap: clamp(12px,5vw,35px);
+    margin: 45px 0;
+}
+
+.empty-star {
+    color: #6e7291;
+    font-size: clamp(25px,5vw,38px);
+    transition: .6s ease;
+}
+
+.empty-star.found {
+    color: #f0d5a0;
+    text-shadow: 0 0 25px rgba(240,213,160,.8);
+    transform: scale(1.2);
+}
+
+.progress-text {
+    color: #9295b3;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-top: 20px;
+}
+
+/* =========================================
+   PAGE 3: CLUE SCREEN
+========================================= */
+
+.clue-card {
+    width: 100%;
+    max-width: 550px;
+    padding: 40px 30px;
+
+    background: rgba(20,23,55,.72);
+    backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(218,190,255,.2);
+    border-radius: 12px;
+
+    box-shadow: 0 0 50px rgba(100,80,160,.12);
+}
+
+.clue-number {
+    color: #d7c18f;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+}
+
+.question {
+    font-family: 'Cormorant Garamond',serif;
+    font-size: clamp(25px,5vw,36px);
+    color: #f4e8ce;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.answer-input {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 30px auto 0;
+    padding: 14px;
+
+    text-align: center;
+    color: white;
+    background: rgba(255,255,255,.04);
+
+    border: none;
+    border-bottom: 1px solid #b9a2d9;
+    outline: none;
+
+    font-family: 'DM Sans',sans-serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+}
+
+.answer-input:focus {
+    border-color: #f0d5a0;
+}
+
+.answer-input::placeholder {
+    color: #777b9b;
+}
+
+.feedback {
+    min-height: 25px;
+    margin-top: 20px;
+    color: #d7c18f;
+    font-size: 13px;
+}
+
+/* =========================================
+   STAR COLLECTION SCREEN
+========================================= */
+
+#collectionPage {
+    padding: 0;
+}
+
+.collection-header {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.collection-header h2 {
+    font-size: clamp(30px,6vw,43px);
+}
+
+.collection-header p {
+    color: #999bb8;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 12px;
+}
+
+#starStage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* STAR BUTTONS */
+
+
+/* DISCOVERED STARS */
+
+.discovered-star {
+    position: absolute;
+    z-index: 3;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: #f5dfaa;
+    font-size: 42px;
+
+    cursor: pointer;
+
+    left: 50%;
+    top: 50%;
+
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+
+    text-shadow:
+        0 0 10px #e8cf96,
+        0 0 30px #e8cf96,
+        0 0 60px rgba(232,207,150,.7);
+
+    transition:
+        left 2.5s cubic-bezier(.16, 1, .3, 1),
+        top 2.5s cubic-bezier(.16, 1, .3, 1),
+        transform 1s cubic-bezier(.16, 1, .3, 1),
+        opacity 1s ease;
+}
+
+.discovered-star.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: starPulse 2.5s ease-in-out infinite alternate;
+}
+
+.discovered-star:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+.discovered-star:disabled {
+    cursor: default;
+}
+
+@keyframes starPulse {
+    from {
+        filter: brightness(.85);
+        text-shadow:
+            0 0 10px #e8cf96,
+            0 0 25px #e8cf96;
+    }
+
+    to {
+        filter: brightness(1.5);
+        text-shadow:
+            0 0 15px #fff1c9,
+            0 0 40px #e8cf96,
+            0 0 75px rgba(232,207,150,.8);
+    }
+}
+
+
+/* =========================================
+   CONSTELLATION
+========================================= */
+
+#constellation {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+#constellationLine {
+    fill: none;
+    stroke: #f0d5a0;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+
+    filter: drop-shadow(0 0 8px #e8cf96);
+
+    transition: stroke-dashoffset 3s ease;
+}
+
+#constellation.visible #constellationLine {
+    stroke-dashoffset: 0;
+}
+
+/* =========================================
+   FINAL MESSAGE
+========================================= */
+
+#finalMessage {
+    position: absolute;
+    z-index: 5;
+    bottom: 8%;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+
+    text-align: center;
+
+    opacity: 0;
+    transition: opacity 1.5s ease;
+
+    pointer-events: none;
+}
+
+#finalMessage.visible {
+    opacity: 1;
+}
+
+#finalMessage h2 {
+    font-size: clamp(28px,6vw,45px);
+}
+
+#finalMessage p {
+    color: #c5c5d7;
+    font-size: 14px;
+    line-height: 1.9;
+    margin-top: 12px;
+}
+
+/* =========================================
+   FINAL MESSAGE AFTER M
+========================================= */
+
+
+#personalMessage {
+    position: absolute;
+    z-index: 6;
+
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90%;
+    max-width: 600px;
+
+    text-align: center;
+    padding: 15px;
+
+    color: #f0d5a0;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(19px, 3vw, 26px);
+
+    line-height: 1.7;
+    letter-spacing: .5px;
+
+    opacity: 0;
+    filter: blur(8px);
+
+    transition:
+        opacity 2.5s ease,
+        filter 2.5s ease;
+
+    pointer-events: none;
+}
+
+#personalMessage.visible {
+    opacity: 1;
+    filter: blur(0);
+}
+
+
+/* Blur everything behind the personal message, not the message itself */
+#messageBackdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: rgba(8, 11, 32, 0.12);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 1.5s ease,
+        -webkit-backdrop-filter 1.5s ease,
+        backdrop-filter 1.5s ease;
+}
+
+#collectionPage.message-mode #messageBackdrop {
+    opacity: 1;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+/* Keep the personal message above the blur layer */
+#personalMessage {
+    z-index: 6;
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:600px) {
+
+    .moon {
+        width: 42px;
+        height: 42px;
+        top: 9%;
+        right: 10%;
+    }
+
+    .moon::after {
+        width: 42px;
+        height: 42px;
+        left: 13px;
+        top: -5px;
+    }
+
+    .eyebrow {
+        letter-spacing: 3px;
+        font-size: 9px;
+    }
+
+    .message {
+        font-size: 13px;
+    }
+
+    .mission-button,
+    .action-button {
+        padding: 15px 25px;
+        font-size: 10px;
+    }
+
+    .clue-card {
+        padding: 30px 18px;
+    }
+
+    .collection-header {
+        top: 25px;
+    }
+
+    .discovered-star {
+        font-size: 35px;
+    }
+
+    #finalMessage {
+        bottom: 12%;
+    }
+}
+
+@media(max-height:700px) {
+    .content {
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .page {
+        overflow-y: auto;
+    }
+}
+
+/* =========================================
+   RESPONSIVE FINAL CONSTELLATION
+   Add this at the VERY END of your CSS
+========================================= */
+
+/* Use the actual visible phone viewport */
+html,
+body {
+    min-height: 100%;
+}
+
+.universe {
+    min-height: 100vh;
+    min-height: 100svh;
+    height: 100vh;
+    height: 100dvh;
+}
+
+/* Keep the collection screen within the viewport */
+#collectionPage {
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+/* Heading gets its own reserved area */
+.collection-header {
+    top: max(25px, env(safe-area-inset-top));
+    left: 5%;
+    width: 90%;
+    padding: 0 8px;
+}
+
+.collection-header .eyebrow {
+    margin-bottom: 15px;
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.collection-header h2 {
+    font-size: clamp(29px, 7vw, 43px);
+    line-height: 1.1;
+}
+
+.collection-header p {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 12px;
+}
+
+/* Keep the constellation lines delicate */
+#constellationLine {
+    stroke-width: 0.85;
+}
+
+/* Star size */
+.discovered-star {
+    font-size: clamp(30px, 8vw, 42px);
+}
+
+/* Recovery message */
+#finalMessage {
+    bottom: 12%;
+    padding: 15px 20px;
+}
+
+#finalMessage h2 {
+    font-size: clamp(25px, 6vw, 38px);
+}
+
+#finalMessage p {
+    font-size: 13px;
+}
+
+/* Personal message gets a separate bottom area */
+#personalMessage {
+    bottom: max(22px, env(safe-area-inset-bottom));
+    width: 88%;
+    max-width: 500px;
+    padding: 10px;
+
+    font-size: clamp(17px, 4.5vw, 23px);
+    line-height: 1.55;
+}
+
+/* =========================================
+   PHONE LAYOUT
+========================================= */
+
+@media (max-width: 600px) {
+
+    .collection-header {
+        top: max(22px, env(safe-area-inset-top));
+    }
+
+    .collection-header .eyebrow {
+        margin-bottom: 13px;
+    }
+
+    .collection-header h2 {
+        font-size: clamp(27px, 7.5vw, 35px);
+    }
+
+    .collection-header p {
+        font-size: 8px;
+        letter-spacing: 1.7px;
+    }
+
+    #constellationLine {
+        stroke-width: 1;
+    }
+
+    .discovered-star {
+        font-size: 34px;
+    }
+
+    #finalMessage {
+        bottom: 17%;
+    }
+
+    #personalMessage {
+        bottom: max(20px, env(safe-area-inset-bottom));
+        width: 90%;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    #personalMessage br {
+        line-height: 1.8;
+    }
+
+    /* Move the moon away from the heading */
+    .moon {
+        width: 36px;
+        height: 36px;
+        top: 4%;
+        right: 5%;
+    }
+
+    .moon::after {
+        width: 36px;
+        height: 36px;
+        top: -4px;
+        left: 11px;
+    }
+}
+
+/* Very short phones */
+@media (max-height: 650px) {
+
+    .collection-header {
+        top: 15px;
+    }
+
+    .collection-header .eyebrow {
+        margin-bottom: 8px;
+    }
+
+    .collection-header p {
+        margin-top: 7px;
+    }
+
+    #personalMessage {
+        bottom: 12px;
+        font-size: 16px;
+    }
+}
+
+/* =========================================
+   HEARTFELT QUESTION OPTIONS
+========================================= */
+
+.answer-options {
+    width: 100%;
+    max-width: 440px;
+    margin: 30px auto 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.answer-option {
+    min-height: 75px;
+    padding: 14px;
+
+    border: 1px solid rgba(199,180,237,.25);
+    border-radius: 5px;
+
+    background: rgba(255,255,255,.035);
+
+    color: #d6d3e8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+
+    cursor: pointer;
+    transition: .35s ease;
+}
+
+.answer-option:hover {
+    border-color: #e7cd9b;
+    background: rgba(231,205,155,.08);
+    transform: translateY(-3px);
+}
+
+.answer-option.selected {
+    border-color: #e7cd9b;
+    background: rgba(231,205,155,.13);
+    color: #f4dfb9;
+    box-shadow: 0 0 22px rgba(231,205,155,.09);
+}
+
+#submitAnswer:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.feedback {
+    min-height: 55px;
+    max-width: 430px;
+    margin: 20px auto 0;
+
+    color: #e4d0a7;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.5;
+
+    opacity: 0;
+    transition: opacity .7s ease;
+}
+
+.feedback.visible {
+    opacity: 1;
+}
+
+@media(max-width:600px) {
+    .answer-options {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-top: 22px;
+    }
+
+    .answer-option {
+        min-height: 56px;
+        padding: 11px 14px;
+        font-size: 12px;
+    }
+
+    .feedback {
+        font-size: 19px;
+        margin-top: 15px;
+    }
+
+    .clue-card {
+        padding: 25px 16px;
+    }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<main class="universe">
+
+    <!-- ORIGINAL BACKGROUND ELEMENTS -->
+
+    <canvas id="starfield"></canvas>
+
+    <div class="nebula one"></div>
+    <div class="nebula two"></div>
+
+    <div class="moon"></div>
+
+    <div class="shooting-star"></div>
+
+
+    <!-- =================================
+         PAGE 1: ORIGINAL OPENING PAGE
+    ================================== -->
+
+    <section class="content" id="openingScreen">
+
+        <div class="eyebrow reveal">
+            A little mystery awaits
+        </div>
+
+        <div class="small-star reveal">✦</div>
+
+        <h1 class="reveal">The Little Universe</h1>
+
+        <p class="subtitle reveal">
+            A mystery written in the stars.
+        </p>
+
+        <div class="divider reveal"></div>
+
+        <div class="message">
+
+            <span class="message-line reveal">
+                Hello, human.
+            </span>
+
+            <span class="message-line reveal">
+                We have a rather unusual situation here.
+            </span>
+
+            <span class="message-line reveal">
+                <span class="highlight">
+                    Five stars have mysteriously disappeared
+                </span>
+                from this little corner of the universe.
+            </span>
+
+            <span class="message-line reveal">
+                And apparently, you're the only person
+                qualified to find them.
+            </span>
+
+            <span class="message-line reveal">
+                Don't ask why. The universe has its reasons.
+            </span>
+
+        </div>
+
+        <button class="mission-button" id="startButton">
+
+            Accept Mission
+
+            <span class="button-arrow">→</span>
+
+        </button>
+
+    </section>
+
+
+    <!-- =================================
+         PAGE 2: MISSION CONTROL
+    ================================== -->
+
+    <section class="page" id="missionPage">
+
+        <div class="page-content">
+
+            <div class="eyebrow">
+                Mission Control · Classified
+            </div>
+
+            <h2 class="mission-heading">
+                Your mission begins here.
+            </h2>
+
+            <div class="divider"></div>
+
+            <p class="description">
+                Five stars are waiting to be discovered.
+                <br>
+                Each one holds a little mystery.
+            </p>
+
+            <div class="empty-stars">
+
+                <span class="empty-star">✦</span>
+                <span class="empty-star">✦</span>
+                <span class="empty-star">✦</span>
+                <span class="empty-star">✦</span>
+                <span class="empty-star">✦</span>
+
+            </div>
+
+            <p class="description">
+                Your objective is simple:
+                <br>
+                Recover all five stars and restore the constellation.
+            </p>
+
+            <p class="progress-text" id="progressText">
+                0 OF 5 STARS RECOVERED
+            </p>
+
+            <button class="action-button" id="findButton">
+                Find the First Star →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         PAGE 3: CLUE SCREEN
+    ================================== -->
+
+    <section class="page" id="cluePage">
+
+        <div class="page-content">
+
+            <div class="eyebrow">
+                A little mystery awaits
+            </div>
+
+            <div class="clue-card">
+
+                <div class="clue-number" id="clueNumber">
+                    CLUE 01
+                </div>
+
+                <h2 class="question" id="question">
+                    What am I?
+                </h2>
+
+                
+                <div class="answer-options" id="answerOptions">
+                    <!-- Options will be generated by JavaScript -->
+                </div>
+
+                <p class="feedback" id="feedback"></p>
+
+                <button class="action-button" id="submitAnswer" disabled>
+                    Continue →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         PAGE 4: STAR COLLECTION
+    ================================== -->
+
+    <section class="page" id="collectionPage">
+
+        <div class="collection-header">
+
+            <div class="eyebrow">
+                The Lost Constellation
+            </div>
+
+            <h2>Look what you found.</h2>
+
+            <p>CLICK THE LATEST GLOWING STAR TO CONTINUE</p>
+
+        </div>
+
+        <div id="starStage">
+
+            <svg id="constellation"
+                 viewBox="0 0 100 100"
+                 preserveAspectRatio="none">
+
+                <polyline id="constellationLine" points=""/>
+
+            </svg>
+
+        </div>
+
+        <!-- This layer blurs the scene behind the personal message only -->
+        <div id="messageBackdrop" aria-hidden="true"></div>
+
+        <div id="finalMessage">
+
+            <h2>Five stars have been recovered.</h2>
+
+            <p>
+                But wait...
+                <br>
+                Something is still off.
+            </p>
+
+        </div>
+
+        
+<div id="personalMessage">
+
+    
+<div class="small-star">✦</div>
+
+<p>
+    The universe holds billions of stars. Some light up the darkness, some guide the way, and some simply make the sky more beautiful.
+</p>
+
+<p>
+    But every once in a while, there's a star whose presence makes you pause and admire the sky a little longer.
+</p>
+
+<p>
+    Perhaps that's the magic of some stars. They don't have to do anything extraordinary. Their presence alone is enough.
+</p>
+
+<p>
+    So, as you begin another journey around the sun, may you always find countless reasons to shine, smile and be happy.
+</p>
+<h2>
+    Happy Birthday! ✨
+</h2>
+
+<p style="
+    color: #e4c991;
+    font-size: 18px;
+    font-style: italic;
+">
+   Keep making this universe a little more beautiful, just by being you.
+
+</p>
+
+</div>
+
+
+    </section>
+
+
+    <!-- ORIGINAL FOOTER -->
+
+    <div class="footer" id="footer">
+        SOMEWHERE BETWEEN DREAMS AND STARS
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   1. ORIGINAL STARFIELD ANIMATION
+========================================= */
+
+const canvas = document.getElementById("starfield");
+const ctx = canvas.getContext("2d");
+
+let backgroundStars = [];
+
+function resizeCanvas() {
+
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = window.innerWidth * ratio;
+    canvas.height = window.innerHeight * ratio;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    createStars();
+
+}
+
+function createStars() {
+
+    backgroundStars = [];
+
+    const count = Math.floor(
+        (window.innerWidth * window.innerHeight) / 2200
+    );
+
+    for (let i = 0; i < count; i++) {
+
+        backgroundStars.push({
+
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+
+            radius: Math.random() * 1.5 + .3,
+            opacity: Math.random(),
+
+            speed: Math.random() * .008 + .002
+
+        });
+
+    }
+
+}
+
+function animateStars() {
+
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    backgroundStars.forEach(star => {
+
+        star.opacity += star.speed;
+
+        if (star.opacity > 1 || star.opacity < .15) {
+            star.speed *= -1;
+        }
+
+        ctx.beginPath();
+
+        ctx.arc(
+            star.x,
+            star.y,
+            star.radius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            `rgba(255,244,220,${star.opacity})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(animateStars);
+
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+animateStars();
+
+
+
+/* =========================================
+   2. GENERAL UTILITIES
+========================================= */
+
+const wait = ms =>
+    new Promise(resolve => setTimeout(resolve, ms));
+
+
+function showPage(page) {
+
+    const pages = document.querySelectorAll(".page");
+
+    pages.forEach(item => {
+
+        if (item !== page) {
+
+            item.classList.remove("active");
+
+            setTimeout(() => {
+
+                if (!item.classList.contains("active")) {
+                    item.style.display = "none";
+                }
+
+            }, 1000);
+
+        }
+
+    });
+
+    page.style.display = "flex";
+
+    requestAnimationFrame(() => {
+        page.classList.add("active");
+    });
+
+}
+
+
+
+/* =========================================
+   3. PAGE 1: AUTOMATIC INTRODUCTION
+========================================= */
+
+const openingScreen =
+    document.getElementById("openingScreen");
+
+const startButton =
+    document.getElementById("startButton");
+
+const footer =
+    document.getElementById("footer");
+
+
+async function revealElements(elements, delay) {
+
+    for (const element of elements) {
+
+        element.classList.add("visible");
+
+        await wait(delay);
+
+    }
+
+}
+
+
+async function startIntroduction() {
+
+    await wait(1000);
+
+    const elements = [
+        ...openingScreen.querySelectorAll(".reveal")
+    ];
+
+    await revealElements(elements, 1650);
+
+    await wait(1000);
+
+    startButton.classList.add("visible");
+
+}
+
+
+/* Accept Mission */
+
+startButton.addEventListener("click", async () => {
+
+    startButton.disabled = true;
+
+    openingScreen.style.transition = "opacity 1s ease";
+    openingScreen.style.opacity = "0";
+
+    footer.style.opacity = "0";
+
+    await wait(1100);
+
+    openingScreen.style.display = "none";
+    footer.style.display = "none";
+
+    showPage(missionPage);
+
+});
+
+
+/* =========================================
+   4. PAGE 2: MISSION CONTROL
+========================================= */
+
+const missionPage =
+    document.getElementById("missionPage");
+
+const findButton =
+    document.getElementById("findButton");
+
+const progressText =
+    document.getElementById("progressText");
+
+
+findButton.addEventListener("click", () => {
+
+    currentClue = 0;
+
+    openClue();
+
+});
+
+
+
+
+/* =========================================
+   5. HEARTFELT QUESTIONS AND ANSWERS
+========================================= */
+
+const clues = [
+
+    
+    {
+        title: "THE SLOW COOK",
+
+        question:
+            "Somebody in this universe has been 'cooking' for about three hours now. The stars are getting hungry. What's going on in that kitchen?",
+
+        options: [
+            "It's not slow, it's 'slow cooking' 😌",
+            "Staring at the induction until it gets scared and heats up",
+            "Waiting for someone else to light the gas",
+            "The food is ready, it's just waiting for everyone else to be ready"
+        ],
+
+        response:
+            "Good food is worth the wait. The stars can wait a little more."
+    },
+
+    {
+        title: "THE PUSH-UP MYSTERY",
+
+        question:
+            "The universe heard about a karate fighter who can kick like a ninja but can't do one single push-up. Even black holes are confused. What's the real reason?",
+
+        options: [
+            "The floor is too far today",
+            "Gravity only gets stronger when she tries",
+            "Push-ups are not her kind of drama",
+            "She's saving her first push-up for a special day"
+        ],
+
+        response:
+            "Mystery not solved, but the stars are clapping anyway."
+    },
+
+    {
+        title: "THE JAM SESSION",
+
+        question:
+            "Somewhere in space, a piano and a guitar got stuck in the same room. The guitar guy also wants to sing. What should the piano do?",
+
+        options: [
+            "Play louder and pretend nothing is happening",
+            "Quietly fix the wrong notes",
+            "Play an old English song and see if he knows it",
+            "Sing along badly, because why not"
+        ],
+
+        response:
+            "The stars heard it all. They liked it more than they will admit."
+    },
+
+    {
+        title: "THE SLOW STARS",
+
+        question:
+            "Two stars in the universe have been moving closer to each other for a million years. Still not there yet. Why is it taking so long?",
+
+        options: [
+            "They are fighting over the window seat",
+            "Their GPS is stuck at 'recalculating'",
+            "They stopped for snacks and forgot to leave",
+            "They are waiting for the perfect song to play"
+        ],
+
+        response:
+            "Wrong. Wrong. And wrong! The real answer is: 'EVERYTHING NEEDS TIME'. 😜"
+    },
+
+        {
+        title: "ONE WISH",
+
+        question:
+            "The universe is in a really good mood today. So here's the question: if you could ask the universe for one thing, what would it be?",
+
+        options: [
+            "A slow, lazy day with good music and good food, and no hurry at all",
+            "So much laughter that your stomach hurts",
+            "Enough strength for anything that comes next (and maybe one push-up 😄)",
+            "Good people around who make even boring days feel special"
+        ],
+
+        response:
+            "Nice choice. But the universe has a secret: it doesn't want to give you just one. I would wish for all of these for you. The slow days, the laughter, the strength, and the good people. All of them. "
+    }
+
+];
+
+let currentClue = 0;
+let starsFound = 0;
+let selectedAnswer = null;
+
+
+/* =========================================
+   6. OPEN CLUE
+========================================= */
+
+const cluePage =
+    document.getElementById("cluePage");
+
+const clueNumber =
+    document.getElementById("clueNumber");
+
+const question =
+    document.getElementById("question");
+
+const answerOptions =
+    document.getElementById("answerOptions");
+
+const feedback =
+    document.getElementById("feedback");
+
+const submitAnswer =
+    document.getElementById("submitAnswer");
+
+
+function openClue() {
+
+    if (currentClue >= clues.length) return;
+
+    const clue = clues[currentClue];
+
+    selectedAnswer = null;
+
+    clueNumber.textContent =
+        `${clue.title} · ${String(currentClue + 1).padStart(2, "0")} / 05`;
+
+    question.textContent = clue.question;
+
+    answerOptions.innerHTML = "";
+
+    feedback.textContent = "";
+    feedback.classList.remove("visible");
+
+    submitAnswer.disabled = true;
+    submitAnswer.textContent = "Continue →";
+
+    clue.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "answer-option";
+        button.textContent = option;
+
+        button.addEventListener("click", () => {
+
+            selectedAnswer = index;
+
+            document.querySelectorAll(".answer-option")
+                .forEach(item => {
+                    item.classList.remove("selected");
+                });
+
+            button.classList.add("selected");
+
+            submitAnswer.disabled = false;
+
+        });
+
+        answerOptions.appendChild(button);
+
+    });
+
+    showPage(cluePage);
+
+}
+
+
+/* =========================================
+   7. ANSWER SELECTION AND RESPONSE
+========================================= */
+
+function checkAnswer() {
+
+    if (selectedAnswer === null) return;
+
+    submitAnswer.disabled = true;
+
+    // Display the heartfelt response.
+    feedback.textContent =
+        clues[currentClue].response;
+
+    feedback.classList.add("visible");
+
+    // Give her a moment to read the message.
+    setTimeout(() => {
+
+        revealNewStar();
+
+    }, 2600);
+
+}
+
+
+submitAnswer.addEventListener("click", checkAnswer);
+
+
+
+/* =========================================
+   8. RANDOM STAR POSITIONS
+========================================= */
+
+const collectionPage =
+    document.getElementById("collectionPage");
+
+const starStage =
+    document.getElementById("starStage");
+
+let randomPositions = [];
+let discoveredStars = [];
+
+
+
+function generateRandomPosition() {
+
+    const isPhone =
+        window.matchMedia("(max-width: 600px)").matches;
+
+    let position;
+    let attempts = 0;
+
+    const minX = isPhone ? 12 : 10;
+    const maxX = isPhone ? 88 : 90;
+
+    const minY = isPhone ? 28 : 23;
+    const maxY = isPhone ? 68 : 85;
+
+    do {
+
+        position = {
+
+            x: minX + Math.random() * (maxX - minX),
+            y: minY + Math.random() * (maxY - minY)
+
+        };
+
+        attempts++;
+
+    } while (
+
+        randomPositions.some(existing => {
+
+            const dx = existing.x - position.x;
+            const dy = existing.y - position.y;
+
+            return Math.sqrt(dx * dx + dy * dy) < 20;
+
+        }) && attempts < 100
+
+    );
+
+    randomPositions.push(position);
+
+    return position;
+
+}
+
+
+
+/* =========================================
+   9. REVEAL NEW STAR
+========================================= */
+
+
+function revealNewStar() {
+
+    const position = generateRandomPosition();
+
+    const star = document.createElement("button");
+
+    star.className = "discovered-star";
+    star.innerHTML = "✦";
+
+    star.setAttribute(
+        "aria-label",
+        `Open discovered star ${currentClue + 1}`
+    );
+
+    // Every star starts at the centre.
+    star.style.left = "50%";
+    star.style.top = "50%";
+
+    starStage.appendChild(star);
+
+    discoveredStars.push(star);
+
+    showPage(collectionPage);
+
+    // Allow the browser to register the starting position.
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            // Make the star visible and move it simultaneously.
+            star.classList.add("visible");
+
+            star.style.left = position.x + "%";
+            star.style.top = position.y + "%";
+
+        });
+
+    });
+
+    // Clicking the star unlocks the next clue.
+    star.addEventListener("click", () => {
+
+        if (star.disabled) return;
+
+        star.disabled = true;
+
+        starsFound++;
+
+        updateProgress();
+
+        currentClue++;
+
+        if (starsFound === 5) {
+
+            finishMission();
+
+        } else {
+
+            setTimeout(() => {
+                openClue();
+            }, 800);
+
+        }
+
+    });
+
+}
+
+
+   
+
+
+/* =========================================
+   10. PROGRESS UPDATE
+========================================= */
+
+function updateProgress() {
+
+    const emptyStars =
+        document.querySelectorAll(".empty-star");
+
+    emptyStars[starsFound - 1].classList.add("found");
+
+    progressText.textContent =
+        `${starsFound} OF 5 STARS RECOVERED`;
+
+}
+
+
+
+/* =========================================
+   11. FINAL MESSAGE
+========================================= */
+
+const finalMessage =
+    document.getElementById("finalMessage");
+
+
+async function finishMission() {
+
+    await wait(1200);
+
+    finalMessage.classList.add("visible");
+
+    await wait(4000);
+
+    arrangeStarsIntoM();
+
+}
+
+
+
+/* =========================================
+   12. FORM THE LETTER M
+========================================= */
+
+
+async function arrangeStarsIntoM() {
+
+    
+const isPhone = window.matchMedia("(max-width: 600px)").matches;
+
+const MPositions = isPhone
+
+    ? [
+
+        // Compact M for portrait screens
+        { x: 18, y: 58 },
+        { x: 18, y: 25 },
+        { x: 50, y: 55 },
+        { x: 82, y: 25 },
+        { x: 82, y: 58 }
+
+    ]
+
+    : [
+
+        // Spacious M for desktop screens
+        { x: 15, y: 75 },
+        { x: 15, y: 20 },
+        { x: 50, y: 70 },
+        { x: 85, y: 20 },
+        { x: 85, y: 75 }
+
+    ];
+
+
+    const line =
+        document.getElementById("constellationLine");
+
+    const constellation =
+        document.getElementById("constellation");
+
+    const finalMessage =
+        document.getElementById("finalMessage");
+
+    const personalMessage =
+        document.getElementById("personalMessage");
+
+
+    // Hide the recovery message.
+    finalMessage.classList.remove("visible");
+
+    await wait(1000);
+
+
+    // Prepare the constellation path.
+    const points = MPositions.map(position =>
+        `${position.x},${position.y}`
+    ).join(" ");
+
+    line.setAttribute("points", points);
+
+
+    /*
+       Move the stars one by one.
+       Each movement has a slight delay,
+       creating a constellation-building effect.
+    */
+
+    for (let i = 0; i < discoveredStars.length; i++) {
+
+        const star = discoveredStars[i];
+        const position = MPositions[i];
+
+        star.style.left = position.x + "%";
+        star.style.top = position.y + "%";
+
+        star.style.transition =
+            "left 2.2s cubic-bezier(.22,1,.36,1), " +
+            "top 2.2s cubic-bezier(.22,1,.36,1), " +
+            "transform 1s ease, opacity 1s ease";
+
+        // Make the stars brighter as they move.
+        star.style.fontSize = "48px";
+
+        star.style.textShadow = `
+            0 0 15px #fff1c9,
+            0 0 35px #e8cf96,
+            0 0 70px rgba(232,207,150,.9)
+        `;
+
+        await wait(650);
+
+    }
+
+
+    // Give the stars time to settle into their positions.
+    await wait(1800);
+
+
+    // Draw the constellation lines.
+    constellation.classList.add("visible");
+
+
+    // Wait until the constellation is fully drawn.
+    await wait(3500);
+
+
+    // Blur the background first; the message remains above the blur layer.
+    collectionPage.classList.add("message-mode");
+
+    // Reveal the personal message.
+    personalMessage.classList.add("visible");
+    
+}
+
+
+
+
+/* =========================================
+   13. START THE EXPERIENCE
+========================================= */
+
+startIntroduction();
+
+</script>
+
+</body>
+</html>
+
+
