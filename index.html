@@ -1867,12 +1867,16 @@ function checkAnswer() {
 
     feedback.classList.add("visible");
 
-    // Give her a moment to read the message.
+        // Give her enough time to read: scales with the length of the message.
+    const words = clues[currentClue].response.split(/\s+/).length;
+    const readingTime = Math.max(2600, 2000 + words * 160);
+
     setTimeout(() => {
 
         revealNewStar();
 
-    }, 2600);
+    }, readingTime);
+
 
 }
 
